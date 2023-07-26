@@ -1,31 +1,51 @@
 'use strict';
 
-const trueValue = Math.trunc(Math.random() * 20);
+let trueValue = Math.trunc(Math.random() * 20);
 let initialScoreElement = document.querySelector('.score');
 initialScoreElement.textContent = 20;
-// let initialScore = Number(initialScoreElement.textContent);
 
 let bestScoreElement = document.querySelector('.hscore');
-let bestScore = 0;
+bestScoreElement.textContent = 0;
+
+let messageElement = document.querySelector('.message');
+let body = document.querySelector('body');
+body.style.backgroundColor = '#222';
 
 document.querySelector('.check').addEventListener('click', function() {
     const userGuess = Number(document.querySelector('.guess').value);
     if (isNaN(userGuess)) {
-        document.querySelector('.message').textContent = "⛔ Kamu belum memasukkan angka...";
+        messageElement.textContent = "⛔ Kamu belum memasukkan angka...";
     } else if (userGuess === trueValue) {
-        document.querySelector('.message').textContent = "🥳 Benar!!!";
-        document.querySelector('body').style.backgroundColor = '#10e5ec';
-        if (bestScore < initialScore) bestScore = initialScore;
+        messageElement.textContent = "🥳 Benar!!!";
+        body.style.backgroundColor = '#10e5ec';
+        body.style.color = '#222'
+        document.querySelector('.number').textContent = trueValue;
+        if (Number(bestScoreElement.textContent) < Number(initialScoreElement.textContent)) {
+            bestScoreElement.textContent = initialScoreElement.textContent;
+        }
     } else if (Number(initialScoreElement.textContent) > 1 && userGuess !== trueValue) {
         if (userGuess > trueValue) {
-            document.querySelector('.message').textContent = "😒 Terlalu besar... coba lagi";
+            messageElement.textContent = "😒 Terlalu besar... coba lagi";
             initialScoreElement.textContent = Number(initialScoreElement.textContent) - 1;
         } else if (userGuess < trueValue) {
-            document.querySelector('.message').textContent = "😒 Terlalu kecil... coba lagi";
+            messageElement.textContent = "😒 Terlalu kecil... coba lagi";
             initialScoreElement.textContent = Number(initialScoreElement.textContent) - 1;
         }
     } else {
-        document.querySelector('.message').textContent = "😭 Kamu gagal... mulai lagi";
-        if (bestScore < Number(initialScoreElement.textContent)) bestScore = initialScore;
+        messageElement.textContent = "😭 Kamu gagal... mulai lagi";
+        if (Number(bestScoreElement.textContent) < Number(initialScoreElement.textContent)) {
+            bestScoreElement.textContent = initialScoreElement.textContent;
+        }
     }
 });
+
+document.querySelector('.reset').addEventListener(
+    'click', function() {
+        messageElement.textContent = "Mulai menebak...";
+        initialScoreElement.textContent = 20;
+        body.style.backgroundColor = '#222';
+        body.style.color = '#eee';      
+        trueValue = Math.trunc(Math.random() * 20);
+        document.querySelector('.number').textContent = '?';  
+    }
+);
