@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Tebak Angka</title>
+</head>
+<body>
+    <header>
+        <h1>Tebak Angka</h1>
+        <p class="between">Antara 1-20</p>
+        <button class="reset">Reset</button>
+        <div class="number">?</div>
+    </header>
+    <main>
+        <section class="left">
+            <input type="number" class="guess">
+            <button class="check">Cek!</button>
+        </section>
+        <section class="right">
+            <p class="message">Mulai menebak...</p>
+            <p class="label-score">💯Skor: <span class="score"></span></p>
+            <p class="label-highest-score">🏆Skor terbaik: <span class="hscore"></span></p>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
