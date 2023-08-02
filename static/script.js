@@ -6,8 +6,15 @@ initialScoreElement.textContent = 20;
 
 let bestScoreElement = document.querySelector('.hscore');
 // bestScoreElement.textContent = 0;
-bestScoreElement.textContent = loadData();
-console.log("data sebelumnya", loadData())
+async function assignBestScore() {
+    try {
+        bestScoreElement.textContent = await fetchBestScore();
+        console.log("data sebelumnya", await fetchBestScore())
+    } catch (error) {
+        console.error("Error", error.message)
+    }
+}
+assignBestScore()
 
 let messageElement = document.querySelector('.message');
 let body = document.querySelector('body');
@@ -32,21 +39,21 @@ function saveData(bestScore) {
   });
 }
 
-function loadData() {
-// Membuat HTTP GET request menggunakan Fetch API
-fetch("http://127.0.0.1:8789/api/data")
-  .then((response) => response.json()) // Mengonversi respons JSON menjadi objek JavaScript
-  .then((data) => {
-    // Memproses data yang diterima dari FastAPI
-    console.log(data); // Menampilkan data ke konsol
-    // ... Lakukan sesuatu dengan data, misalnya tampilkan di halaman HTML Anda
-    // bestScoreElement.textContent = data["best_score"]
-    return data.best_score
-  })
-  .catch((error) => {
-    console.error("Error:", error); // Menangani kesalahan jika ada
-  });
-}
+async function fetchBestScore() {
+    try {
+      const response = await fetch("http://localhost:8789/api/data");
+      if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+      }
+      const data = await response.json();
+      console.log("returning best score")
+      console.log(data.best_score)
+      return data.best_score;
+    } catch (error) {
+      console.error("Error:", error.message);
+      throw error;
+    }
+  }
 
 const mainGame = function() {
     userGuess = Number(document.querySelector('.guess').value);
