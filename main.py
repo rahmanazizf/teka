@@ -4,7 +4,6 @@ from fastapi.templating import Jinja2Templates
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from logging import log
 
 app = FastAPI(debug=True)
 
@@ -32,7 +31,6 @@ async def start():
 async def getBestScore(data: dict):
     global best_score
     best_score = data.get("best_score", False)
-    log(1, f"nilai terbaik: {best_score}")
     if not best_score:
         return JSONResponse({"message": "error could not retrieve data"})
     return JSONResponse(data)

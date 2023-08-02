@@ -9,7 +9,6 @@ let bestScoreElement = document.querySelector('.hscore');
 async function assignBestScore() {
     try {
         bestScoreElement.textContent = await fetchBestScore();
-        console.log("data sebelumnya", await fetchBestScore())
     } catch (error) {
         console.error("Error", error.message)
     }
@@ -46,8 +45,6 @@ async function fetchBestScore() {
         throw new Error("HTTP error " + response.status);
       }
       const data = await response.json();
-      console.log("returning best score")
-      console.log(data.best_score)
       return data.best_score;
     } catch (error) {
       console.error("Error:", error.message);
@@ -70,14 +67,14 @@ const mainGame = function() {
         }
     } else if (Number(initialScoreElement.textContent) > 1 && userGuess !== trueValue) {
         if (userGuess > trueValue) {
-            messageElement.textContent = "😒 Terlalu besar... coba lagi";
+            messageElement.textContent = "😒 Terlalu besar...";
             initialScoreElement.textContent = Number(initialScoreElement.textContent) - 1;
         } else if (userGuess < trueValue) {
-            messageElement.textContent = "😒 Terlalu kecil... coba lagi";
+            messageElement.textContent = "😒 Terlalu kecil...";
             initialScoreElement.textContent = Number(initialScoreElement.textContent) - 1;
         }
     } else {
-        messageElement.textContent = "😭 Kamu gagal... mulai lagi";
+        messageElement.textContent = "😭 Kamu gagal";
         if (Number(bestScoreElement.textContent) < Number(initialScoreElement.textContent)) {
             bestScoreElement.textContent = initialScoreElement.textContent;
         }
